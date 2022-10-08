@@ -5,16 +5,26 @@ import { NextPage } from "next";
 import useAuthStore from "../store/authStore";
 
 interface IProps {
+  likes: any[];
   handleLike: () => void;
   handleDislike: () => void;
 }
 
-const LikeButton = ({ handleLike, handleDislike }: IProps) => {
+const LikeButton = ({ likes, handleLike, handleDislike }: IProps) => {
   const [isAlreadyLiked, setIsAlreadyLiked] = useState(false);
   const { userProfile }: any = useAuthStore();
+  const filterLikes = likes?.filter((item) => item._ref === userProfile?._id);
+
+  useEffect(() => {
+    if (filterLikes?.length > 0) {
+      setIsAlreadyLiked(true);
+    } else {
+      setIsAlreadyLiked(false);
+    }
+  }, [filterLikes, likes]);
 
   return (
-    <div className="gap-6">
+    <div className="gap-6 items-start">
       <div className="mt-4 flex flex-col justify-center items-center cursor-pointer">
         {isAlreadyLiked ? (
           <div
@@ -31,7 +41,7 @@ const LikeButton = ({ handleLike, handleDislike }: IProps) => {
             <MdFavorite className="text-lg md:text-lg" />
           </div>
         )}
-        <p className="text-md font-semibold">Likes.length || 0</p>
+        <p className="text-md font-semibold">{likes?.length || 0}</p>
       </div>
     </div>
   );
