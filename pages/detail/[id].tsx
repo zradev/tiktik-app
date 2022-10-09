@@ -12,7 +12,7 @@ import useAuthStore from "../../store/authStore";
 import { Video } from "../../types";
 import axios from "axios";
 import LikeButton from "../../components/LikeButton";
-import Comments from "./../../components/Comment";
+import Comments from "../../components/Comments";
 
 interface IProps {
   postDetails: Video;
